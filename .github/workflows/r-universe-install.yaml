@@ -1,0 +1,37 @@
+name: R-universe install smoke test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: release
+          use-public-rspm: true
+      - name: Install betaCalendarsR from R-universe
+        run: |
+          Rscript -e 'install.packages("betaCalendarsR", repos = c("https://beta-calendar.r-universe.dev", "https://cloud.r-project.org"))'
+      - name: Verify calendar examples
+        run: |
+          Rscript - <<'RSCRIPT'
+          library(betaCalendarsR)
+
+          january <- month_grid(2027, 1, week_start = "monday", fixed_rows = TRUE)
+          stopifnot(nrow(january) == 42L)
+
+          year <- year_grid(2027, week_start = "monday", fixed_rows = FALSE)
+          stopifnot(nrow(year) == 365L, length(unique(year$month)) == 12L)
+
+          mondays <- recurrence_dates(
+            as.Date("2027-01-01"), as.Date("2027-01-31"),
+            frequency = "weekly", weekday = "monday"
+          )
+          stopifnot(length(mondays) == 5L)
+          cat("R-universe install and calendar examples passed.\n")
+          RSCRIPT
