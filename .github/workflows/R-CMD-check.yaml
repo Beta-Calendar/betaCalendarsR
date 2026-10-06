@@ -28,6 +28,7 @@ jobs:
         with:
           needs: check
       - name: Build source package
+        shell: bash
         run: R CMD build .
       - name: Check source package
         shell: bash
