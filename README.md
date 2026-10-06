@@ -22,7 +22,7 @@ can feed a report, dashboard, Shiny view, test fixture, or static document.
 install.packages(
   "betaCalendarsR",
   repos = c(
-    "https://betacalendars.r-universe.dev",
+    "https://beta-calendar.r-universe.dev",
     "https://cloud.r-project.org"
   )
 )
@@ -139,4 +139,4 @@ MIT. See `LICENSE`.
 ## Project
 
 Maintained by [Beta Calendars](https://www.betacalendars.com/). Source and issue
-tracking are on [GitHub](https://github.com/betacalendars/betaCalendarsR).
+tracking are on [GitHub](https://github.com/Beta-Calendar/betaCalendarsR).

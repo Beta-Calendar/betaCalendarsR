@@ -12,9 +12,9 @@ Description: Tools for generating deterministic month, year, and date-range
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://www.betacalendars.com/,
-    https://betacalendars.r-universe.dev/betaCalendarsR,
-    https://github.com/betacalendars/betaCalendarsR
-BugReports: https://github.com/betacalendars/betaCalendarsR/issues
+    https://beta-calendar.r-universe.dev/betaCalendarsR,
+    https://github.com/Beta-Calendar/betaCalendarsR
+BugReports: https://github.com/Beta-Calendar/betaCalendarsR/issues
 Depends: R (>= 4.1.0)
 Suggests:
     knitr,
