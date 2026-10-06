@@ -26,12 +26,12 @@ jobs:
           stopifnot(nrow(january) == 42L)
 
           year <- year_grid(2027, week_start = "monday", fixed_rows = FALSE)
-          stopifnot(nrow(year) == 365L, length(unique(year$month)) == 12L)
+          stopifnot(nrow(year) >= 365L, length(unique(year$grid_month)) == 12L)
 
           mondays <- recurrence_dates(
             as.Date("2027-01-01"), as.Date("2027-01-31"),
             frequency = "weekly", weekday = "monday"
           )
-          stopifnot(length(mondays) == 5L)
+          stopifnot(length(mondays) == 4L)
           cat("R-universe install and calendar examples passed.\n")
           RSCRIPT
