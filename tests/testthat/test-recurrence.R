@@ -1,6 +1,6 @@
 test_that("weekday helpers identify Nth and final weekdays", {
   expect_equal(nth_weekday(2027, 1, "monday", 1), as.Date("2027-01-04"))
-  expect_equal(nth_weekday(2027, 3, "monday", 5), as.Date(NA))
+  expect_equal(nth_weekday(2027, 2, "monday", 5), as.Date(NA))
   expect_equal(last_weekday(2027, 1), as.Date("2027-01-29"))
   expect_equal(last_weekday(2027, 1, "monday"), as.Date("2027-01-25"))
   expect_error(nth_weekday(2027, 1, "Mon", 1), "weekday")

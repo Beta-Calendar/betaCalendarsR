@@ -50,7 +50,7 @@ test_that("month identity and ISO New Year fields remain explicit", {
 test_that("invalid month-grid arguments are rejected", {
   expect_error(month_grid(2027, 0), "month")
   expect_error(month_grid(2027, 13), "month")
-  expect_error(month_grid(2027, 1, "Mon"), "weekday")
+  expect_error(month_grid(2027, 1, "Mon"), "week_start")
   expect_error(month_grid(2027, 1, fixed_rows = NA), "fixed_rows")
   expect_error(month_grid(999, 1), "year")
 })
