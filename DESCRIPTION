@@ -1,0 +1,26 @@
+Package: betaCalendarsR
+Type: Package
+Title: Deterministic Calendar Grids and Date Planning Utilities
+Version: 0.1.0
+Authors@R: person("Mateo", "Pedersen", email = "betacalendars@gmail.com", role = c("aut", "cre"))
+Description: Tools for generating deterministic month, year, and date-range
+    calendar structures from base R dates. Configurable week starts, fixed and
+    compact month grids, adjacent-month cells, ISO week metadata, calendar
+    boundaries, and bounded recurrence helpers support reporting, dashboards,
+    scheduling interfaces, tests, and other applications that separate
+    calendar structure from rendering.
+License: MIT + file LICENSE
+Encoding: UTF-8
+URL: https://www.betacalendars.com/,
+    https://betacalendars.r-universe.dev/betaCalendarsR,
+    https://github.com/betacalendars/betaCalendarsR
+BugReports: https://github.com/betacalendars/betaCalendarsR/issues
+Depends: R (>= 4.1.0)
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
+X-schema.org-keywords: calendar, date-time, calendar-grid, date-range,
+    planner, schedule, recurrence, year-month, reporting

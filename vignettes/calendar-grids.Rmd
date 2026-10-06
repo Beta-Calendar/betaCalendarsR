@@ -1,0 +1,100 @@
+---
+title: "Building Deterministic Calendar Grids with betaCalendarsR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Building Deterministic Calendar Grids with betaCalendarsR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+`betaCalendarsR` converts base R dates into explicit calendar positions. The
+resulting data frames can be used by reports, dashboards, Shiny applications,
+tests, or renderers without asking the package to draw a particular interface.
+
+```{r}
+library(betaCalendarsR)
+```
+
+## January 2027 and week starts
+
+The default grid contains six complete weeks. `in_month` distinguishes January
+dates from the leading and trailing cells.
+
+```{r}
+january <- month_grid(2027, 1, week_start = "monday")
+stopifnot(nrow(january) == 42L)
+january[january$in_month, c("date", "weekday", "iso_week")]
+```
+
+Sunday-first and Saturday-first calendars use the same columns with a different
+first weekday.
+
+```{r}
+sunday_grid <- month_grid(2027, 1, week_start = "sunday")
+saturday_grid <- month_grid(2027, 1, week_start = "saturday")
+head(sunday_grid[c("date", "weekday", "row", "column")])
+head(saturday_grid[c("date", "weekday", "row", "column")])
+```
+
+## Fixed and compact layouts; overflow cells
+
+Compact grids use the minimum four, five, or six complete weeks needed for a
+month. Overflow cells can be hidden while retaining their positions.
+
+```{r}
+compact <- month_grid(2027, 2, fixed_rows = FALSE)
+hidden_overflow <- month_grid(2027, 2, overflow = FALSE)
+c(nrow(compact), nrow(hidden_overflow), sum(hidden_overflow$visible))
+```
+
+## A year and a cross-year range
+
+The combined year table stores the requested month in `grid_month` even when a
+cell belongs to an adjacent month.
+
+```{r}
+year <- year_grid(2027, fixed_rows = FALSE)
+table(year$grid_month)
+
+new_year <- date_range_grid(as.Date("2026-12-30"), as.Date("2027-01-03"))
+new_year[c("date", "year", "month", "iso_week", "iso_week_year")]
+```
+
+## Leap days and ISO week-years
+
+Gregorian century rules make 2000 a leap year and 2100 a common year. ISO week
+years may cross the calendar-year boundary; for example, January 1, 2021 belongs
+to ISO week 53 of 2020.
+
+```{r}
+calendar_boundaries(2000)$is_leap_year
+calendar_boundaries(2100)$is_leap_year
+date_range_grid(as.Date("2021-01-01"), as.Date("2021-01-03"))[
+  c("date", "iso_week", "iso_week_year")
+]
+```
+
+## Bounded recurrence rules
+
+Every recurrence is evaluated inside an explicit inclusive range. A missing
+31st can be skipped or clamped to the month end.
+
+```{r}
+paydays <- recurrence_dates(
+  as.Date("2027-01-01"), as.Date("2027-12-31"),
+  frequency = "nth_weekday", weekday = "friday", n = 2
+)
+month_ends <- recurrence_dates(
+  as.Date("2027-01-01"), as.Date("2027-03-31"),
+  frequency = "monthly", day = 31, missing = "clamp"
+)
+head(paydays$date)
+month_ends$date
+```
+
+The package represents civil calendar dates. It does not convert instants or
+apply time-zone rules; those remain responsibilities of the application.

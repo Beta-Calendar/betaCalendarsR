@@ -1,0 +1,9 @@
+.Rhistory
+.RData
+.Rproj.user
+*.tar.gz
+betaCalendarsR.Rcheck/
+docs/
+site_libs/
+renv/library/
+renv/staging/
